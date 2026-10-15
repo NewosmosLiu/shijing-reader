@@ -1,9 +1,13 @@
 {
   "name": "shijing-reader",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "private": true,
   "description": "诗经注析 · Shijing Reader：离线安卓诗经阅读应用",
   "license": "MIT",
-  "scripts": {"test": "node tests/reader.spec.cjs"},
-  "devDependencies": {"playwright": "1.64.1"}
+  "scripts": {
+    "test": "node tests/reader.spec.cjs && node tests/reading-layout.spec.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
 }

@@ -43,6 +43,10 @@ public final class MainActivity extends Activity {
         web.setBackgroundColor(Color.rgb(247,244,236));
         web.getSettings().setJavaScriptEnabled(true);
         web.getSettings().setDomStorageEnabled(true);
+        web.getSettings().setSupportZoom(false);
+        web.getSettings().setBuiltInZoomControls(false);
+        web.getSettings().setDisplayZoomControls(false);
+        web.getSettings().setTextZoom(100);
         web.addJavascriptInterface(new ReaderBackup(),"ReaderNative");
         web.getSettings().setAllowFileAccess(false);
         web.getSettings().setAllowContentAccess(false);

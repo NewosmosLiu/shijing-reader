@@ -12,3 +12,9 @@
 .verse-phrase{display:inline-block;max-width:100%;vertical-align:top}.verse-cell{position:relative;display:inline-block;width:1.08em;vertical-align:top;text-align:center}.verse-punctuation{width:.6em;text-align:left}.verse-space{width:.5em}.verse-tail{position:absolute;inset-inline-start:100%;top:0;white-space:nowrap;text-align:left}.reader-head h1{text-indent:7px}
 
 .reader-head .pill{width:116px;height:44px;padding:0 12px;justify-content:center;vertical-align:middle}.reader-head .pill+.pill{margin-left:6px}
+
+/* The page cannot pinch-zoom; PDF gestures are handled within its own viewport. */
+html{touch-action:pan-x pan-y}
+.brand-copy{display:grid;grid-template-columns:104px}.brand-copy>strong{display:block;white-space:nowrap}.brand small.brand-authors{display:flex;justify-content:space-between;align-items:center;letter-spacing:0;white-space:nowrap;margin-top:6px}.brand-authors>span:not(:nth-child(2)){letter-spacing:1px}
+.annotation-sheet{height:85dvh;display:flex;flex-direction:column;overflow:hidden}.annotation-sheet>.handle,.annotation-sheet>.sheet-header{flex-shrink:0}.note-reference{flex-shrink:0;background:var(--paper);border-bottom:1px solid var(--line)}.note-reference .source-line{margin:4px 0 10px}.note-reference .quote{margin:8px 0 16px;max-height:24dvh;overflow:auto}.note-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:12px 0 0;scrollbar-gutter:stable}
+.source-scan{max-height:58dvh;touch-action:none;overscroll-behavior:contain;scrollbar-width:none;user-select:none}.source-scan::-webkit-scrollbar{display:none}.source-scan img{pointer-events:none;-webkit-user-drag:none}

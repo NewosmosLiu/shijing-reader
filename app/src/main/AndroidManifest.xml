@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="9" android:versionName="1.2.6">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="10" android:versionName="1.2.7">
     <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="35" />
     <application android:label="诗经注析" android:icon="@drawable/ic_launcher" android:theme="@android:style/Theme.Material.Light.NoActionBar" android:allowBackup="false" android:enableOnBackInvokedCallback="false" android:supportsRtl="true" android:usesCleartextTraffic="false">
         <activity android:name="cn.shijing.reader.MainActivity" android:exported="true" android:configChanges="orientation|screenSize|keyboardHidden|uiMode">

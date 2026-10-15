@@ -4,13 +4,13 @@
 
 一款离线安卓《诗经》阅读应用。收录 305 篇古典诗文，支持全文搜索、收藏、阅读足迹、章句注释和夜间阅读。
 
-**中文名：诗经注析** · 英文名：Shijing Reader · 当前版本：1.2.6 · [MIT 许可证](LICENSE)
+**中文名：诗经注析** · 英文名：Shijing Reader · 当前版本：1.2.7 · [MIT 许可证](LICENSE)
 
 项目地址：<https://github.com/NewosmosLiu/shijing-reader>
 
 ## 手机下载安装
 
-[**下载诗经注析 1.2.6 完整版 APK**](https://github.com/NewosmosLiu/shijing-reader/releases/download/v1.2.6/shijing-reader-1.2.6.apk) · [全部版本](https://github.com/NewosmosLiu/shijing-reader/releases)
+[**下载诗经注析 1.2.7 完整版 APK**](https://github.com/NewosmosLiu/shijing-reader/releases/download/v1.2.7/shijing-reader-1.2.7.apk) · [全部版本](https://github.com/NewosmosLiu/shijing-reader/releases)
 
 完整版含原书 PDF、整理后的题解及章句注析，安装后无需另行导入数据，可离线使用。请在手机浏览器下载 APK，按系统提示允许本次安装。Android 6.0 及以上，需较新的 Android System WebView。书籍内容不属于 MIT 许可范围，使用前请阅读 [使用声明](DISCLAIMER.md)。
 
@@ -104,3 +104,5 @@ tests/                  数据、发布文件与浏览器交互检查
 联系作者：<newcosmosliu@outlook.com>。
 
 代码按 MIT 协议开源。第三方数据及构建工具保留其原始许可声明。
+
+1.2.7：底部入口更名为“诗三百”；界面保持固定缩放，仅 PDF 图片支持双指缩放和拖动；章句注析使用固定原句区与独立滚动正文；主页作者名与书名两端对齐。

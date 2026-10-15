@@ -16,7 +16,7 @@ const root=path.join(__dirname,'../app/src/main/assets');
   await page.goto('https://app.shijing.local/index.html');
   assert.equal(await page.title(),'诗经注析');
   assert.equal(await page.evaluate(()=>BOOK.poems.length),305);
-  assert.deepEqual(await page.locator('.nav button').allTextContents(),['今日','篇目','搜索','我的']);
+  assert.deepEqual(await page.locator('.nav button').allTextContents(),['诗三百','篇目','搜索','我的']);
   await page.locator('[data-nav="book"]').click();assert.equal(await page.locator('.poem-card').count(),305);
   await page.locator('[data-section="国风"]').click();assert.equal(await page.locator('.poem-card').count(),160);
   await page.locator('[data-nav="search"]').click();await page.locator('#search').fill('蒹葭');
