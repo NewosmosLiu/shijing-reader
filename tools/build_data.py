@@ -13,12 +13,16 @@ private_annotations = ROOT / 'data/annotations.local.json'
 if private_annotations.exists():
     for poem_id, changes in json.loads(private_annotations.read_text(encoding='utf-8')).items():
         annotations.setdefault(poem_id, {}).update(changes)
+pdf_map = json.loads((ROOT / 'data/pdf-pages.json').read_text(encoding='utf-8'))
 config_file = ROOT / 'data/local-config.json'
-config = json.loads(config_file.read_text(encoding='utf-8')) if config_file.exists() else {}
+config = {'sourcePageCount': pdf_map['pageCount']}
+if config_file.exists():
+    config.update(json.loads(config_file.read_text(encoding='utf-8')))
 poems = []
 for index, original in enumerate(corpus, 1):
     poem_id = 'p' + str(index).zfill(3)
     extra = annotations.get(poem_id, {})
+    pdf_pages = pdf_map['poems'].get(poem_id, {})
     notes = extra.get('stanzas', {})
     chapter = original['chapter']
     section = '颂' if chapter.endswith('颂') else chapter
@@ -30,12 +34,12 @@ for index, original in enumerate(corpus, 1):
             'text': text,
             'sentences': re.findall(r'[^。！？!?]+[。！？!?]?', text) or [text],
             'notes': entry.get('notes', ''),
-            'page': entry.get('page'),
+            'page': entry.get('page') or (pdf_pages.get('stanzaPages') or [])[stanza_index],
         })
     poems.append({
         'id': poem_id, 'title': original['title'], 'section': section, 'group': group,
         'intro': extra.get('intro', '《' + original['title'] + '》收于《诗经·' + chapter + '·' + original['section'] + '》。公开版未收录现代题解。'),
-        'page': extra.get('page'), 'stanzas': stanzas,
+        'page': extra.get('page') or pdf_pages.get('page'), 'stanzas': stanzas,
     })
 has_pdf = (ASSETS / 'source-book.pdf').exists() and int(config.get('sourcePageCount', 0)) > 0
 book = {
@@ -45,7 +49,7 @@ book = {
         'sourceSha256': hashlib.sha256(source.read_text(encoding='utf-8').encode('utf-8')).hexdigest(), 'dataLicense': 'MIT',
         'hasSourcePDF': has_pdf, 'sourcePageCount': config.get('sourcePageCount', 0) if has_pdf else 0,
         'hasSourceOCR': has_pdf and (ASSETS / 'source-pages.json').exists(),
-        'notice': '公开版收录 305 篇古典诗文及少量自行编写的示例注释，未附商业书籍扫描、现代题解及注析全文。',
+        'notice': '含原书 PDF，供交流学习，不作商业用途。代码的 MIT 许可不适用于原书及相关书籍内容。正文来自开源诗文数据，弹窗附少量示例注释。',
     },
     'poems': poems,
 }

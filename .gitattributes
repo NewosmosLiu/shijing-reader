@@ -3,4 +3,5 @@
 gradlew -text
 gradlew.bat -text
 *.png binary
+*.pdf binary
 *.jar binary

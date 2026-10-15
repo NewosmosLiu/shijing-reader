@@ -15,6 +15,7 @@ tests/artifacts/
 *.p12
 *.pem
 *.pdf
+!app/src/main/assets/source-book.pdf
 *.jsonl
 *.apk
 .env
