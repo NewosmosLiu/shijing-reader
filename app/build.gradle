@@ -1,0 +1,7 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'cn.shijing.reader'
+    compileSdk 35
+    defaultConfig { applicationId 'cn.shijing.reader.opensource'; minSdk 23; targetSdk 35; versionCode 8; versionName '1.2.5' }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}

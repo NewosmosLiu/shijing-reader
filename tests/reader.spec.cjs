@@ -1,0 +1,54 @@
+const {chromium}=require('playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.join(__dirname,'../app/src/main/assets');
+(async()=>{
+ const executablePath=process.env.CHROME_PATH||(process.platform==='win32'&&fs.existsSync('C:/Program Files/Google/Chrome/Application/chrome.exe')?'C:/Program Files/Google/Chrome/Application/chrome.exe':undefined);
+ const browser=await chromium.launch({executablePath,headless:true});
+ try{
+  const page=await browser.newPage({viewport:{width:393,height:852},reducedMotion:'reduce'});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.route('https://app.shijing.local/**',route=>{
+   const u=new URL(route.request().url()),file=path.join(root,decodeURIComponent(u.pathname==='/'?'/index.html':u.pathname));
+   if(!file.startsWith(root))return route.abort();
+   return route.fulfill({path:file,contentType:file.endsWith('.js')?'application/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8'});
+  });
+  await page.goto('https://app.shijing.local/index.html');
+  assert.equal(await page.title(),'诗经注析');
+  assert.equal(await page.evaluate(()=>BOOK.poems.length),305);
+  assert.deepEqual(await page.locator('.nav button').allTextContents(),['今日','篇目','搜索','我的']);
+  await page.locator('[data-nav="book"]').click();assert.equal(await page.locator('.poem-card').count(),305);
+  await page.locator('[data-section="国风"]').click();assert.equal(await page.locator('.poem-card').count(),160);
+  await page.locator('[data-nav="search"]').click();await page.locator('#search').fill('蒹葭');
+  await page.locator('[data-poem="p129"]').click();
+  assert.equal(await page.locator('.reader-head h1').textContent(),'蒹葭');
+  assert.equal(await page.locator('[data-action="source"]').count(),0);
+  await page.locator('[data-action="favorite"]').click();
+  await page.locator('.sentence').first().click();assert((await page.locator('.note-body').textContent()).includes('本项目编写'));
+  await page.locator('[data-action="close"]').click();await page.locator('.sentence').last().click();
+  assert((await page.locator('.note-body').textContent()).includes('暂未收录'));
+  await page.locator('[data-action="close"]').click();await page.locator('[data-action="back"]').click();
+  await page.reload();await page.locator('[data-nav="mine"]').click();
+  assert((await page.locator('[data-destination="heart"]').textContent()).includes('1 篇'));
+  await page.locator('[data-destination="heart"]').click();assert.equal(await page.locator('[data-poem="p129"]').count(),1);
+  await page.evaluate(()=>handleAndroidBack());await page.locator('[data-destination="history"]').click();
+  assert.equal(await page.locator('[data-poem="p129"]').count(),1);
+  await page.evaluate(()=>handleAndroidBack());await page.locator('[data-destination="about"]').click();
+  assert.deepEqual(await page.locator('.about-section h2').allTextContents(),['软件缘由','开源地址','当前版本','联系作者']);
+  assert.equal(await page.locator('.about-link').first().getAttribute('href'),'https://github.com/NewosmosLiu/shijing-reader');
+  assert.equal(await page.locator('.about-link').last().getAttribute('href'),'mailto:newcosmosliu@outlook.com');
+  fs.mkdirSync(path.join(__dirname,'artifacts'),{recursive:true});
+  await page.screenshot({path:path.join(__dirname,'artifacts/about.png'),fullPage:true});
+  await page.evaluate(()=>handleAndroidBack());await page.locator('[data-nav="home"]').click();
+  await page.screenshot({path:path.join(__dirname,'artifacts/home.png'),fullPage:true});
+  await page.locator('.poem-card[data-poem="p004"]').click();
+  assert.equal(await page.locator('.sentence strong').count(),0);
+  await page.screenshot({path:path.join(__dirname,'artifacts/reader.png'),fullPage:true});
+  await page.locator('[data-action="settings"]').click();await page.locator('[data-action="night"]').click();
+  await page.locator('[data-size="27"]').click();await page.locator('[data-action="close"]').click();
+  assert(await page.locator('body').evaluate(b=>b.classList.contains('night')));
+  await page.setViewportSize({width:320,height:852});
+  const overflow=await page.evaluate(()=>{state.size=31;theme();const bad=[];for(const p of poems){current=p;render();if(document.documentElement.scrollWidth>innerWidth+1)bad.push(p.id);}return bad;});
+  assert.deepEqual(overflow,[]);assert.deepEqual(errors,[]);
+  console.log('PASS: public corpus, search, categories, annotations, missing-note state, favorites/history persistence, about, theme, all-poem mobile layout.');
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

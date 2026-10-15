@@ -1,0 +1,9 @@
+{
+  "repository": "https://github.com/chinese-poetry/chinese-poetry",
+  "source": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E8%AF%97%E7%BB%8F/shijing.json",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2016 JackeyGao",
+  "localSha256": "3c7ca54d59424542ada99adfcc85420287fbbd5c8a511e9baf705cb2b04051e7",
+  "upstreamSha256": "3c7ca54d59424542ada99adfcc85420287fbbd5c8a511e9baf705cb2b04051e7",
+  "localHashEncoding": "UTF-8 with LF newlines"
+}

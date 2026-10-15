@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.sh text eol=lf
+gradlew -text
+gradlew.bat -text
+*.png binary
+*.jar binary
